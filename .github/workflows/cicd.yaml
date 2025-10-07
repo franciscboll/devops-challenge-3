@@ -118,7 +118,7 @@ jobs:
       - name: Desplegar aplicación con Helm
         run: |
           IMAGE_URI="$(aws sts get-caller-identity --query 'Account' --output text).dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO"
-          TAG="git-${GITHUB_SHA::7}"
+          TAG="${APP_NAME}-${GITHUB_SHA::7}"
 
           helm upgrade --install $APP_NAME ./deploy/helm \
             --namespace $APP_NAME --create-namespace \
