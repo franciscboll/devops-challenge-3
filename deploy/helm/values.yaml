@@ -9,4 +9,9 @@ service:
   type: ClusterIP
   port: 8080
 
+# ✅ Agregado para evitar error por variable nil
+ingress:
+  enabled: false
+  host: "localhost"  
+
 resources: {}
