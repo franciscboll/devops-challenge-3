@@ -5,6 +5,14 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  
+  # 🧠 Permite ejecución manual desde la pestaña "Actions" en GitHub
+  workflow_dispatch:
+    inputs:
+      deploy_env:
+        description: "Seleccionar entorno de despliegue (default: main)"
+        required: false
+        default: "main"
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
