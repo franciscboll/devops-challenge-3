@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
   EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }}
   ECR_REPO: ${{ vars.ECR_REPO }}
   APP_NAME: ${{ vars.APP_NAME }}
@@ -42,6 +42,19 @@ jobs:
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
+
+      # 🔹 Configurar credenciales AWS (corrección)
+      - name: Configurar credenciales AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}  
+
+      - name: Verificar variables cargadas
+        run: |
+          echo "AWS_REGION=$AWS_REGION"
+          echo "ECR_REPO=$ECR_REPO"      
 
       - name: Login en AWS ECR
         run: |
@@ -86,6 +99,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}  
+
+      - name: Verificar variables cargadas
+        run: |
+          echo "AWS_REGION=$AWS_REGION"
+          echo "ECR_REPO=$ECR_REPO"    
 
       - name: Configurar acceso a EKS
         run: |
