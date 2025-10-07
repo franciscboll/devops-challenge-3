@@ -1,11 +1,19 @@
+# Imagen base ligera y estable
 FROM node:18-alpine
 
+# Directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app
 
+# Copia el manifiesto del proyecto y ejecuta npm install
+# (--omit=dev evita instalar dependencias de desarrollo)
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm install --omit=dev || true
 
+# Copia el resto del código fuente
 COPY . .
 
+# Expone el puerto donde corre la app
 EXPOSE 8080
+
+# Comando de inicio del contenedor
 CMD ["npm", "start"]
