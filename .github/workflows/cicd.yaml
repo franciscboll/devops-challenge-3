@@ -70,7 +70,7 @@ jobs:
       - name: Construir imagen Docker
         run: |
           IMAGE_URI="$(aws sts get-caller-identity --query 'Account' --output text).dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO"
-          TAG="git-${GITHUB_SHA::7}"
+          TAG="${APP_NAME}-${GITHUB_SHA::7}"
           docker build -t $IMAGE_URI:$TAG ./app
           docker tag $IMAGE_URI:$TAG $IMAGE_URI:latest
 
@@ -78,13 +78,13 @@ jobs:
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
           IMAGE_URI="$(aws sts get-caller-identity --query 'Account' --output text).dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO"
-          TAG="git-${GITHUB_SHA::7}"
+          TAG="${APP_NAME}-${GITHUB_SHA::7}"
           grype $IMAGE_URI:$TAG || true
 
       - name: Publicar imagen en ECR
         run: |
           IMAGE_URI="$(aws sts get-caller-identity --query 'Account' --output text).dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO"
-          TAG="git-${GITHUB_SHA::7}"
+          TAG="${APP_NAME}-${GITHUB_SHA::7}"
           docker push $IMAGE_URI:$TAG
           docker push $IMAGE_URI:latest
 
