@@ -7,7 +7,7 @@ image:
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 9999
 
 # ✅ Agregado para evitar error por variable nil
 ingress:
