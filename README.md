@@ -47,20 +47,20 @@ Incluye además ejecución **manual** desde la pestaña *Actions*
 
 ## 🧩 Flujo funcional
 
-	1.	Commit / Pull Request:
-GitHub Actions se activa automáticamente con cada cambio en main.
-	2.	Tests automáticos:
-Se ejecutan pruebas básicas (npm test) para validar la app antes del build.
-	3.	Build y escaneo de imagen:
+1.	Commit / Pull Request:
+    GitHub Actions se activa automáticamente con cada cambio en main.
+2.	Tests automáticos:
+    Se ejecutan pruebas básicas (npm test) para validar la app antes del build.
+3.	Build y escaneo de imagen:
 	•	Docker genera la imagen con Dockerfile dentro de app/.
 	•	La imagen se etiqueta como appname-<commit> y se analiza con Grype en busca de vulnerabilidades.
-	4.	Publicación en ECR:
-La imagen aprobada se sube al Amazon Elastic Container Registry.
-	5.	Despliegue en EKS con Helm:
-Helm actualiza el release en el clúster EKS, inyectando la nueva imagen y tag.
-Usa --atomic para revertir automáticamente si el rollout falla.
-	6.	Rollback automático:
-Si el nuevo pod no pasa el readinessProbe, Helm revierte la versión anterior sin intervención manual.
+4.	Publicación en ECR:
+    La imagen aprobada se sube al Amazon Elastic Container Registry.
+5.	Despliegue en EKS con Helm:
+    Helm actualiza el release en el clúster EKS, inyectando la nueva imagen y tag.
+    Usa --atomic para revertir automáticamente si el rollout falla.
+6.	Rollback automático:
+    Si el nuevo pod no pasa el readinessProbe, Helm revierte la versión anterior sin intervención manual.
 
 ------------------------------------------------------------------------
 

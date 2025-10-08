@@ -3,8 +3,18 @@ name: CI/CD Pipeline - Challenge 3
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'app/**'                # Código fuente de la aplicación
+      - 'deploy/**'             # Archivos de despliegue Helm
+      - '.github/workflows/**'  # Configuración del pipeline
+      - '!**/README.md'         # Ignora cambios en documentación
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'app/**'
+      - 'deploy/**'
+      - '.github/workflows/**'
+      - '!**/README.md'
   
   # 🧠 Permite ejecución manual desde la pestaña "Actions" en GitHub
   workflow_dispatch:
